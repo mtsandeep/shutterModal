@@ -1,0 +1,14 @@
+#shutter-cover:before {
+content: '';
+display: inline-block;
+vertical-align: middle;
+height: 100%;
+}
+#shutter-cover{
+	text-align:center;
+}
+#shutter-cover .shutter {
+display: inline-block!important;
+vertical-align: middle;
+text-align:left;
+}

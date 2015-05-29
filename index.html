@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Shutter Modal</title>
+    <link rel="stylesheet" href="css/shutterModal.css" type="text/css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="js/shutterModal.js"></script>
+	<style>
+		.shutter{
+			background:#fff;
+			padding:20px;
+			max-width:600px;
+			width:100%;
+		}
+	</style>
+	<script>
+		$(function(){
+			$('.show-shutter').on('click', function(e){
+				e.preventDefault();
+				$('#modal-content').shutterModal();
+			})
+			$('.show-shutter-ajax').on('click', function(e){
+				e.preventDefault();
+				$(document).shutterModal({url:'ajax.html'});
+			})
+		})
+	</script>
+</head>
+<body>
+	<p style="text-align:center"><a class="show-shutter" href="#">show shutter</a> <a class="show-shutter-ajax" href="#">show shutter (ajax)</a></p>
+	<div id="modal-content" style="display:none">
+		<p>Hello this is a demo text</p>
+	</div>
+</body>
+</html>
