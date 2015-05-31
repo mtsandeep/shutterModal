@@ -10,6 +10,8 @@
 				background: 'rgba(0,0,0,0.8)',
 				zIndex:99,
 				url: '',
+				easing: 'swing',
+				duration: 1000,
 				showAfter: 0,
 				hideAfter: 0,
 				close: true,
@@ -85,7 +87,7 @@
 				function shutter(){
 					showClose();
 					fixPosition();
-					$('body').find('#shutter-cover').animate({marginTop:0},'swing', function(){
+					$('body').find('#shutter-cover').animate({marginTop:0}, o.duration, o.easing, function(){
 						o.onLoad($this); //callback after shutter is loaded and displayed
 					});					
 				}
@@ -131,7 +133,7 @@
 					} else {
 						var requiredHeight = $this.outerHeight(true);
 					}
-					$('#shutter-cover').animate({marginTop:-requiredHeight},'swing',function(){
+					$('#shutter-cover').animate({marginTop:-requiredHeight}, o.duration, o.easing, function(){
 						o.onClose($this); //callback after shutter is removed
 						$('#shutter-cover').remove(); //remove everything
 					});

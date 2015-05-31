@@ -6,6 +6,7 @@
     <title>Shutter Modal</title>
     <link rel="stylesheet" href="css/shutterModal.css" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>jQuery.extend(jQuery.easing,{def:"easeOutQuad",jswing:function(e,a,c,b,d){return jQuery.easing[jQuery.easing.def](e,a,c,b,d)},easeInQuad:function(e,a,c,b,d){return b*(a/=d)*a+c},easeOutQuad:function(e,a,c,b,d){return-b*(a/=d)*(a-2)+c}});</script>
 	<script src="js/shutterModal.js"></script>
 	<style>
 		.shutter{
@@ -19,11 +20,11 @@
 		$(function(){
 			$('.show-shutter').on('click', function(e){
 				e.preventDefault();
-				$('#modal-content').shutterModal();
+				$('#modal-content').shutterModal({easing:'jswing'});
 			})
 			$('.show-shutter-ajax').on('click', function(e){
 				e.preventDefault();
-				$(document).shutterModal({url:'ajax.html'});
+				$(document).shutterModal({url:'ajax.html', easing:'jswing'});
 			})
 		})
 	</script>
