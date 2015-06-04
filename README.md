@@ -1,5 +1,5 @@
 # shutterModal
-Simple jQuery modal plugin which slides in from top. demo : http://demos.mtsandeep.com/shutterModal/
+Simple jQuery modal plugin which slides in from top. demo : http://demos.mtsandeep.com/shutter-modal/
 
 ##Basic usage
 
