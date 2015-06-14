@@ -3,8 +3,9 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
     <title>Shutter Modal</title>
-    <link rel="stylesheet" href="css/shutterModal.css" type="text/css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script>jQuery.extend(jQuery.easing,{def:"easeOutQuad",jswing:function(e,a,c,b,d){return jQuery.easing[jQuery.easing.def](e,a,c,b,d)},easeInQuad:function(e,a,c,b,d){return b*(a/=d)*a+c},easeOutQuad:function(e,a,c,b,d){return-b*(a/=d)*(a-2)+c}});</script>
 	<script src="js/shutterModal.js"></script>
@@ -12,8 +13,14 @@
 		.shutter{
 			background:#fff;
 			padding:20px;
-			max-width:600px;
-			width:100%;
+			width:560px;
+			margin:20px auto;
+		}
+		@media(max-width:599px){
+			.shutter{
+				width:70%;
+				padding:10%;
+			}
 		}
 	</style>
 	<script>
@@ -29,7 +36,7 @@
 		})
 	</script>
 </head>
-<body>
+<body style="width:800px;margin:0 auto">
 	<p style="text-align:center"><a class="show-shutter" href="#">show shutter</a> <a class="show-shutter-ajax" href="#">show shutter (ajax)</a></p>
 	<div id="modal-content" style="display:none">
 		<p>Hello this is a demo text</p>

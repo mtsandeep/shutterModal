@@ -24,9 +24,7 @@
 			var options = $.extend(defaults, options); 
 			return this.each(function() {
 				var o = options; 
-				
-				var windowHeight = $(window).height();
-				var pageCover = '<div id="shutter-cover" style="position:absolute;top:0;left:0;width:100%;height:100%;background:'+o.background+';z-index:'+o.zIndex+';margin-top:-'+windowHeight+'px;"></div>';
+				var pageCover = '<div id="shutter-cover" style="position:fixed;top:0;left:0;width:100%;background:'+o.background+';z-index:'+o.zIndex+';margin-top:-100%;overflow:auto;"></div>';
 				var close ='<a class="shutter-close" href="#">X</a>';
 				
 				var element = $(this);
@@ -72,12 +70,12 @@
 					if(o.url){ //check if url is provided, if yes load that to the div
 						$('body').find('#shutter-cover').html(contentWrapper);
 						$.get( o.url, function(data) {
-							$('body').find('#shutter-content').append(data).css('z-index',o.zIndex+9).addClass('shutter'); // appending so as not to remove the close button
+							$('body').find('#shutter-content').append(data).addClass('shutter'); // appending so as not to remove the close button
 							fixPosition(); // make sure size is properly done after getting content
 						});
 					} else {
 						var modalContent = contentWrapper.html(element.clone().show());
-						modalContent.css('z-index',o.zIndex+9).addClass('shutter');
+						modalContent.addClass('shutter');
 						$('body').find('#shutter-cover').html(modalContent);
 					}
 					
@@ -86,8 +84,13 @@
 				
 				function shutter(){
 					showClose();
+					
+					$('body').data('orig-style',$('body').attr('style'));
+					$('body').css('overflow','hidden');
+					
 					fixPosition();
-					$('body').find('#shutter-cover').animate({marginTop:0}, o.duration, o.easing, function(){
+					
+					$('#shutter-cover').animate({marginTop:0}, o.duration, o.easing, function(){
 						o.onLoad($this); //callback after shutter is loaded and displayed
 					});					
 				}
@@ -103,17 +106,16 @@
 				}
 				
 				function fixPosition(){
-					var remainingHeight = $(window).height() - $this.outerHeight();
-					var remainingWidth = $(window).width() - $this.outerWidth();
-					if(remainingHeight < 40){ // 20px at top between the content and window
-						$('#shutter-cover').css({'height':$this.outerHeight(true)});
-					} else {
-						$('#shutter-cover').css({'height':'100%'});
-					}
-					if(remainingWidth < 40){
-						$('#shutter-cover').css({'width':$this.outerWidth()});
-					} else {
-						$('#shutter-cover').css({'width':'100%'});
+					var windowHeight = $(window).height();
+					var remainingHeight = windowHeight - $('#shutter-content').outerHeight(true);
+					var remainingWidth = windowHeight - $('#shutter-content').outerWidth(true);
+					
+					$('#shutter-cover').css({'height': windowHeight});
+					
+					if($('#shutter-content').outerHeight(true) <= windowHeight){ // if content is having lesss height than window we will center the content using top value
+						$('#shutter-content').css({position: 'absolute', top: remainingHeight/2, left: remainingWidth/2, 'z-index': o.zIndex+9});
+					} else { // when height is less, we remove our top values if any
+						$('#shutter-content').removeAttr('style').css({'z-index': o.zIndex+9});
 					}
 				}
 				
@@ -128,14 +130,10 @@
 				function closeShutter(){
 					$(window).unbind('resize.shutter');
 					$(document).unbind('keyup.shutter');
-					if($(window).height() > $this.outerHeight(true)){
-						var requiredHeight = $(window).height();
-					} else {
-						var requiredHeight = $this.outerHeight(true);
-					}
-					$('#shutter-cover').animate({marginTop:-requiredHeight}, o.duration, o.easing, function(){
+					$('#shutter-cover').animate({marginTop:-$(window).height()}, o.duration, o.easing, function(){
 						o.onClose($this); //callback after shutter is removed
 						$('#shutter-cover').remove(); //remove everything
+						$('body').removeAttr('style').attr('style',$('body').data('orig-style'));
 					});
 				}
 			
