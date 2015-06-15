@@ -29,10 +29,9 @@ $('#modal-content').shutterModal({
 ```
 ##example
 
-Include the shutterModal.css , jquery, shutterModal.js into your html page and trigger the shutterModal
+Include jquery, shutterModal.js into your html page and trigger the shutterModal
 
 ```
-<link rel="stylesheet" href="css/shutterModal.css" type="text/css">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 <script src="js/shutterModal.js"></script>
