@@ -1,7 +1,6 @@
 // Shutter Modal js
 // Copyright (c) 2015 Sandeep MT - http://mtsandeep.com
 // Licensed under the MIT license: http://www.opensource.org/licenses/mit-license.php
-// credits for vertically centering http://christopheraue.net/2014/02/20/centering-with-vertical-align-middle/
 ;(function($){ 
 	$.fn.extend({  
 		shutterModal: function(options) {
@@ -24,7 +23,7 @@
 			var options = $.extend(defaults, options); 
 			return this.each(function() {
 				var o = options; 
-				var pageCover = '<div id="shutter-cover" style="position:fixed;top:0;left:0;width:100%;background:'+o.background+';z-index:'+o.zIndex+';margin-top:-100%;overflow:auto;"></div>';
+				var pageCover = '<div id="shutter-cover" style="position:fixed;top:0;left:0;width:100%;background:'+o.background+';z-index:'+o.zIndex+';margin-top:-'+$(window).height()+'px;overflow:auto;"></div>';
 				var close ='<a class="shutter-close" href="#">X</a>';
 				
 				var element = $(this);
@@ -108,12 +107,10 @@
 				function fixPosition(){
 					var windowHeight = $(window).height();
 					var remainingHeight = windowHeight - $('#shutter-content').outerHeight(true);
-					var remainingWidth = windowHeight - $('#shutter-content').outerWidth(true);
 					
 					$('#shutter-cover').css({'height': windowHeight});
-					
 					if($('#shutter-content').outerHeight(true) <= windowHeight){ // if content is having lesss height than window we will center the content using top value
-						$('#shutter-content').css({position: 'absolute', top: remainingHeight/2, left: remainingWidth/2, 'z-index': o.zIndex+9});
+						$('#shutter-content').css('position', 'absolute').css({top: remainingHeight/2, left: ($('#shutter-content').width() <= $(window).width()) ? ($(window).width() - $('#shutter-content').width())/2 : 0, 'z-index': o.zIndex+9});
 					} else { // when height is less, we remove our top values if any
 						$('#shutter-content').removeAttr('style').css({'z-index': o.zIndex+9});
 					}
